@@ -281,38 +281,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 8. Theme Toggle (light default, dark-theme class for dark) ---
+    // --- 8. Theme Toggle (CSS defaults to dark; body.light-theme = light) ---
     const themeBtn = document.getElementById('theme-toggle');
     const themeIcon = themeBtn ? themeBtn.querySelector('i') : null;
     const THEME_KEY = 'kamesh-portfolio-theme';
 
-    localStorage.removeItem('theme');
-
     const savedTheme = localStorage.getItem(THEME_KEY);
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-theme');
-        if (themeIcon) {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        }
-    } else {
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
         if (themeIcon) {
             themeIcon.classList.remove('fa-sun');
             themeIcon.classList.add('fa-moon');
+        }
+    } else {
+        document.body.classList.remove('light-theme');
+        if (themeIcon) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
         }
     }
 
     if (themeBtn && themeIcon) {
         themeBtn.addEventListener('click', () => {
-            document.body.classList.toggle('dark-theme');
-            let theme = 'light';
-            if (document.body.classList.contains('dark-theme')) {
-                theme = 'dark';
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            } else {
+            document.body.classList.toggle('light-theme');
+            let theme = 'dark';
+            if (document.body.classList.contains('light-theme')) {
+                theme = 'light';
                 themeIcon.classList.remove('fa-sun');
                 themeIcon.classList.add('fa-moon');
+            } else {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
             }
             localStorage.setItem(THEME_KEY, theme);
         });
