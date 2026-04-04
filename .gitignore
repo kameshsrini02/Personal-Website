@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Local env / secrets (if you add tooling later)
+.env
+.env.*
+
+# Optional tooling
+node_modules/
