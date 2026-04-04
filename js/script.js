@@ -281,23 +281,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 8. Theme Toggle (default = light; body.dark-theme = dark) ---
+    // --- 8. Theme Toggle (default = dark on load; saved 'light' overrides) ---
     const themeBtn = document.getElementById('theme-toggle');
     const themeIcon = themeBtn ? themeBtn.querySelector('i') : null;
     const THEME_KEY = 'kamesh-portfolio-theme';
 
     const savedTheme = localStorage.getItem(THEME_KEY);
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-theme');
-        if (themeIcon) {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        }
-    } else {
+    if (savedTheme === 'light') {
         document.body.classList.remove('dark-theme');
         if (themeIcon) {
             themeIcon.classList.remove('fa-sun');
             themeIcon.classList.add('fa-moon');
+        }
+    } else {
+        document.body.classList.add('dark-theme');
+        if (themeIcon) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
         }
     }
 
