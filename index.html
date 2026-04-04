@@ -7,6 +7,8 @@
     <meta name="description"
         content="Kamesh Srinivasan - M.S in ECE at UC Davis. Personal portfolio showcasing IC design, CMOS analog circuits, and power electronics projects.">
     <title>Kamesh Srinivasan | Portfolio</title>
+    <link rel="icon" type="image/png" href="assets/ucdavis_logo.png">
+    <link rel="apple-touch-icon" href="assets/ucdavis_logo.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 
 <body>
@@ -54,7 +56,7 @@
             </div>
             <div class="nav-right">
                 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
                 </button>
                 <div class="hamburger" id="hamburger">
                     <span></span>
@@ -453,18 +455,31 @@
                     engineering.
                 </p>
 
-                <div class="coursework-grid">
-                    <article class="coursework-card glass-card" data-reveal="fade-right">
-                        <h3>Coursework Focus</h3>
-                        <ul class="coursework-list">
-                            <li>Integrated Circuits Design and Tapeout</li>
-                            <li>Mixed-Signal and CMOS Analog Circuit Design</li>
-                            <li>VLSI and Low-Power IC Design</li>
-                            <li>Microprocessors and Microcontrollers</li>
-                            <li>Power Electronics and Electrical Machines</li>
-                            <li>Optical Communication and Semiconductor Engineering</li>
-                        </ul>
-                    </article>
+                <div class="coursework-chips" data-reveal="fade-up">
+                    <button class="cw-chip" data-delay="0">
+                        <i class="fas fa-microchip"></i>
+                        <span>Integrated Circuits Design & Tapeout</span>
+                    </button>
+                    <button class="cw-chip" data-delay="60">
+                        <i class="fas fa-wave-square"></i>
+                        <span>Mixed-Signal & CMOS Analog Design</span>
+                    </button>
+                    <button class="cw-chip" data-delay="120">
+                        <i class="fas fa-memory"></i>
+                        <span>VLSI & Low-Power IC Design</span>
+                    </button>
+                    <button class="cw-chip" data-delay="180">
+                        <i class="fas fa-server"></i>
+                        <span>Microprocessors & Microcontrollers</span>
+                    </button>
+                    <button class="cw-chip" data-delay="240">
+                        <i class="fas fa-bolt"></i>
+                        <span>Power Electronics & Electrical Machines</span>
+                    </button>
+                    <button class="cw-chip" data-delay="300">
+                        <i class="fas fa-satellite-dish"></i>
+                        <span>Optical Communication & Semiconductor Engineering</span>
+                    </button>
                 </div>
             </div>
         </section>
@@ -648,7 +663,12 @@
 
                 <div class="contact-center-wrapper">
                     <div class="contact-form-container glass-card" data-reveal="fade-up">
-                        <form id="contact-form" class="contact-form">
+                        <!-- Contact: Web3Forms (https://web3forms.com) -->
+                        <form id="contact-form" class="contact-form" action="https://api.web3forms.com/submit"
+                            method="POST">
+                            <input type="hidden" name="access_key" value="b152183a-3efb-4a89-bbd6-c01501d01a09">
+                            <input type="checkbox" name="botcheck" class="web3forms-honeypot" tabindex="-1"
+                                autocomplete="off" aria-hidden="true">
                             <div class="form-row">
                                 <div class="form-group">
                                     <input type="text" id="name" name="name" placeholder="Your Name" required>
@@ -705,7 +725,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
     <!-- Custom JS -->
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=3"></script>
 </body>
 
 </html>

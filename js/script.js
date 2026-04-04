@@ -143,30 +143,57 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 5. Form Submission Prevent Default (Demo) ---
+    // --- 5. Contact form (Web3Forms) ---
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = contactForm.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
+            const originalHTML = btn.innerHTML;
+            const accessKey = contactForm.querySelector('input[name="access_key"]')?.value?.trim();
 
-            // Basic simulation of sending
+            if (!accessKey) {
+                alert('Contact form is missing its access key. Check index.html.');
+                return;
+            }
+
             btn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
             btn.disabled = true;
 
-            setTimeout(() => {
-                btn.innerHTML = 'Message Sent! <i class="fas fa-check"></i>';
-                btn.classList.add('btn-success'); // Assuming standard fallback
-                btn.style.backgroundColor = '#10b981'; // Tailwind green equivalent
-                contactForm.reset();
+            const formData = new FormData(contactForm);
+            const payload = Object.fromEntries(formData.entries());
 
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                    btn.style.backgroundColor = '';
-                }, 3000);
-            }, 1500);
+            try {
+                const res = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+                const result = await res.json();
+
+                if (result.success) {
+                    btn.innerHTML = 'Message Sent! <i class="fas fa-check"></i>';
+                    btn.classList.add('btn-success');
+                    btn.style.backgroundColor = '#6D8196';
+                    contactForm.reset();
+
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.disabled = false;
+                        btn.style.backgroundColor = '';
+                        btn.classList.remove('btn-success');
+                    }, 3000);
+                } else {
+                    throw new Error(result.message || 'Submission failed');
+                }
+            } catch {
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+                alert('Could not send your message. Please try again or use the email link below.');
+            }
         });
     }
 
@@ -238,14 +265,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 8. Theme Toggle ---
+    // --- 8. Theme Toggle (light default, dark-theme class for dark) ---
     const themeBtn = document.getElementById('theme-toggle');
     const themeIcon = themeBtn ? themeBtn.querySelector('i') : null;
+    const THEME_KEY = 'kamesh-portfolio-theme';
 
-    // Check local storage for theme
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme === 'light') {
-        document.body.classList.add('light-theme');
+    localStorage.removeItem('theme');
+
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+        if (themeIcon) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+    } else {
         if (themeIcon) {
             themeIcon.classList.remove('fa-sun');
             themeIcon.classList.add('fa-moon');
@@ -254,17 +288,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (themeBtn && themeIcon) {
         themeBtn.addEventListener('click', () => {
-            document.body.classList.toggle('light-theme');
-            let theme = 'dark';
-            if (document.body.classList.contains('light-theme')) {
-                theme = 'light';
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            } else {
+            document.body.classList.toggle('dark-theme');
+            let theme = 'light';
+            if (document.body.classList.contains('dark-theme')) {
+                theme = 'dark';
                 themeIcon.classList.remove('fa-moon');
                 themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
             }
-            localStorage.setItem('theme', theme);
+            localStorage.setItem(THEME_KEY, theme);
         });
     }
 
