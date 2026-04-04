@@ -172,7 +172,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     body: JSON.stringify(payload),
                 });
-                const result = await res.json();
+                const text = await res.text();
+                let result;
+                try {
+                    result = JSON.parse(text);
+                } catch {
+                    throw new Error(
+                        'The form service returned an invalid response. Free host URLs like *.vercel.app are often blocked by Web3Forms — try a custom domain or contact Web3Forms support.'
+                    );
+                }
 
                 if (result.success) {
                     btn.innerHTML = 'Message Sent! <i class="fas fa-check"></i>';
@@ -189,10 +197,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     throw new Error(result.message || 'Submission failed');
                 }
-            } catch {
+            } catch (err) {
                 btn.innerHTML = originalHTML;
                 btn.disabled = false;
-                alert('Could not send your message. Please try again or use the email link below.');
+                const detail = err instanceof Error ? err.message : 'Unknown error';
+                alert(
+                    `Could not send your message.\n\n${detail}\n\nTip: Web3Forms often requires a custom domain on free hosts (not *.vercel.app). You can still use the email icon below.`
+                );
             }
         });
     }
@@ -200,7 +211,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 6. Typing Effect ---
     const typingElement = document.querySelector('.typing-text');
     if (typingElement) {
-        const words = ["Specialization in AI and Robotics", "AI/ML Engineer", "Computer Vision Specialist", "Robotics Researcher"];
+        const words = [
+            "Analog & Mixed-Signal IC Design",
+            "Power Electronics & Control",
+            "VLSI & CMOS Tapeout",
+            "M.S. ECE @ UC Davis",
+        ];
         let wordIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
