@@ -1453,6 +1453,16 @@ body.dark-theme .project-front-overlay {
 .pub-status { font-size: 0.9rem; color: var(--primary); margin-bottom: 0.75rem; font-weight: 600; }
 .pub-desc   { margin-bottom: 1rem; color: var(--text-secondary); }
 
+.pub-actions {
+    margin-top: 0.25rem;
+}
+
+.pub-paper-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
 /* ==========================================================================
    Leadership
    ========================================================================== */
